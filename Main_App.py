@@ -71,44 +71,45 @@ def run_tracer_design():
 
 
 def run_cd40_immunosome():
-    st.header("🛡️ CD40 Systems Biology Framework")
-    scaffolds = ["Liposome", "Exosome", "PLGA Polymer", "Gold NP"]
-    scaffold = st.selectbox("Delivery Vehicle", scaffolds)
-    
+    st.header("🔬 CD40 Immunosome Architecture")
+    st.write("Modeling the spatial organization of CD40 receptors on synthetic scaffolds.")
+
+    # 1. Inputs
     col1, col2 = st.columns(2)
     with col1:
-        st.success(f"Modeling CD40 clustering on {scaffold} surface...")
-        st.write("- Receptor recruitment: High")
-        st.write("- TRAF6 activation: Predicted")
+        # Label change kiya taaki duplicate error na aaye
+        vehicle = st.selectbox("Select Delivery Scaffold", ["Liposome", "Exosome", "PLGA Polymer", "Gold NP"])
+        cluster_size = st.slider("Target Cluster Size", 10, 200, 60)
     with col2:
-        st.info("Hypothesis: Scaffold rigidity dictates NF-kB oscillation frequency.")
-        # --- DYNAMIC SIGNALING HEATMAP ---
+        dissociation = st.slider("Dissociation Constant (kd)", 0.01, 1.0, 0.15)
+
+    # 2. Logic & Metrics
+    st.metric("Predicted TRAF6 Recruitment", f"{int(cluster_size * 2.4)} units")
+
+    # 3. Heatmap Visualization
     st.subheader("🔥 Receptor Clustering Heatmap")
     
-    vehicle = st.selectbox("Delivery Vehicle", ["Liposome", "Exosome", "PLGA Polymer", "Gold NP"])
     intensity_map = {"Liposome": 0.8, "Exosome": 1.2, "PLGA Polymer": 0.5, "Gold NP": 1.5}
     base_intensity = intensity_map.get(vehicle, 1.0)
     
-    # Random clustering data generate karna (Research simulation)
+    # Random clustering data generate karna
     data = np.random.rand(10, 10) * base_intensity
     
     fig = go.Figure(data=go.Heatmap(
         z=data,
-        x=[f"Pos {i}" for i in range(10)],
-        y=[f"Pos {i}" for i in range(10)],
         colorscale='Hot',
         colorbar=dict(title="Signaling Intensity")
     ))
     
     fig.update_layout(
-        title=f"CD40 Nanocluster Distribution on {vehicle} Surface",
+        title=f"CD40 Nanocluster Distribution: {vehicle}",
         xaxis_title="Membrane X-axis",
         yaxis_title="Membrane Y-axis"
     )
     
     st.plotly_chart(fig, use_container_width=True)
-    
-    st.write(f"**Analysis:** The {vehicle} scaffold provides a spatial constraint that promotes TRAF6 recruitment.")
+    st.info(f"💡 This heatmap simulates how the {vehicle} surface geometry influences receptor density.")
+
 
 def run_neurometabolic():
     st.header("🧠 NeuroMetabolic Pathway Engine")
