@@ -81,17 +81,72 @@ def run_clinical_interactome():
 
 def run_zebrafish_morphometry():
     st.header("🧬 3D Spatial Phenotyping (Zebrafish)")
-    uploaded = st.file_uploader("Upload Cdh2-CRISPR CSV", type="csv")
-    if uploaded:
-        df = pd.read_csv(uploaded)
-        st.write("Data Preview:", df.head())
-        # 3D Plot logic
-        fig = plt.figure()
-        ax = fig.add_subplot(111, projection='3d')
-        ax.scatter(np.random.randn(10), np.random.randn(10), np.random.randn(10))
-        st.pyplot(fig)
+    st.markdown("---")
+
+    # --- Step 1: Data Input Selection ---
+    input_method = st.radio("Choose Data Source:", ["Upload My CSV", "Use Sample Research Data"])
+
+    df = None
+
+    if input_method == "Upload My CSV":
+        uploaded = st.file_uploader("Upload Cdh2-CRISPR CSV", type="csv")
+        if uploaded:
+            df = pd.read_csv(uploaded)
     else:
-        st.info("Please upload the CSV from your Zebrafish paper to see 3D analysis.")
+        # Research-based Sample Data Generation
+        st.info("Loading pre-set morphometry data (Cdh2-deficient model simulation)")
+        data = {
+            'centroid-0': np.random.uniform(10, 80, 150),  # Z-axis
+            'centroid-1': np.random.uniform(50, 450, 150), # X-axis
+            'centroid-2': np.random.uniform(50, 450, 150), # Y-axis
+            'volume_voxels': np.random.normal(650, 120, 150),
+            'nearest_neighbor_dist': np.random.uniform(8, 25, 150)
+        }
+        df = pd.DataFrame(data)
+
+    # --- Step 2: Visualization (Only if data exists) ---
+    if df is not None:
+        # Cleaning numeric columns
+        for col in df.columns:
+            if df[col].dtype == 'object':
+                df[col] = pd.to_numeric(df[col].astype(str).str.replace(',', ''), errors='coerce')
+        
+        m1, m2, m3 = st.columns(3)
+        m1.metric("Total Nuclei Analyzed", len(df))
+        m2.metric("Avg Nuclear Volume", f"{df['volume_voxels'].mean():.1f}")
+        m3.metric("Avg NN Distance", f"{df['nearest_neighbor_dist'].mean():.2f} μm")
+
+        col_left, col_right = st.columns([1.5, 1])
+
+        with col_left:
+            st.subheader("📍 3D Nuclear Architecture")
+            fig3d = plt.figure(figsize=(10, 8))
+            ax3d = fig3d.add_subplot(111, projection='3d')
+            
+            # Color by volume to show hypertrophy
+            sc = ax3d.scatter(
+                df['centroid-1'], df['centroid-2'], df['centroid-0'], 
+                c=df['volume_voxels'], cmap='magma', s=40, alpha=0.7
+            )
+            ax3d.set_xlabel('X (μm)')
+            ax3d.set_ylabel('Y (μm)')
+            ax3d.set_zlabel('Z (μm)')
+            plt.colorbar(sc, label='Volume (voxels)', shrink=0.5)
+            st.pyplot(fig3d)
+
+        with col_right:
+            st.subheader("📈 Morphometric Distribution")
+            fig_hist, ax_hist = plt.subplots()
+            sns.histplot(df['volume_voxels'], kde=True, color='purple', ax=ax_hist)
+            ax_hist.set_title("Volume Frequency")
+            st.pyplot(fig_hist)
+
+            # Correlation Plot
+            corr, _ = pearsonr(df['volume_voxels'], df['nearest_neighbor_dist'])
+            st.write(f"**Volume-Packing Correlation (r):** {corr:.2f}")
+    else:
+        st.warning("Please upload a file or select 'Use Sample Data' to begin.")
+
 
 # --- 3. THE UNIFIED NAVIGATION SIDEBAR ---
 
