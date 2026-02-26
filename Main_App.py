@@ -262,7 +262,7 @@ st.sidebar.divider()
 
 # --- QUICK LINKS FOR PROFESSORS ---
 st.sidebar.subheader("🔗 Quick Links")
-st.sidebar.markdown("[📄 BioRxiv Preprint](https://www.biorxiv.org/content/10.1101/2024.08.19.608581v1)")
-st.sidebar.markdown("[💻 GitHub Repo](https://github.com/Yashwant-Nama/MultiScale-BioDigital-Bridge)")
+st.sidebar.markdown("[📄 BioRxiv Preprint]()")
+st.sidebar.markdown("[💻 GitHub Repo](https://github.com/YASH4-HD/MultiScale-BioDigital-Bridge)")
 
 st.sidebar.caption("PhD Portfolio | Jaipur, Rajasthan")
