@@ -1,0 +1,22 @@
+# --- Core Web Framework ---
+streamlit>=1.25.0
+
+# --- Data Manipulation & Math ---
+pandas>=2.0.0
+numpy>=1.24.0
+scipy>=1.10.0
+
+# --- Visualization (2D & 3D) ---
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.15.0
+
+# --- Network & Systems Biology ---
+networkx>=3.1
+pyvis>=0.3.1
+
+# --- Image Processing & Morphometry ---
+scikit-image>=0.21.0
+
+# --- API & Connectivity ---
+requests>=2.31.0
