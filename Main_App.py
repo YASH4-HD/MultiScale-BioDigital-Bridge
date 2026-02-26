@@ -74,10 +74,60 @@ def run_neurometabolic():
 
 def run_clinical_interactome():
     st.header("🔬 Clinical & PPI Validation (STRING-DB)")
-    gene_input = st.text_input("Enter Genes (comma separated)", "HTT, BDNF, CASP3")
-    if st.button("Generate Network"):
-        st.warning("Fetching live interactions from STRING-DB...")
-        # (Yahan aapka NetworkX logic aa sakta hai)
+    st.markdown("---")
+    
+    col1, col2 = st.columns([1, 3])
+    
+    with col1:
+        st.subheader("Network Settings")
+        gene_input = st.text_area("Enter Gene Symbols (comma separated):", "HTT, BDNF, CASP3, TP53, SOD1")
+        conf_score = st.slider("Confidence Threshold", 0, 1000, 400)
+        st.info("Higher score = More reliable interactions")
+        
+    with col2:
+        if st.button("Generate Live Interactome"):
+            st.warning("Fetching data from STRING-DB API...")
+            
+            # 1. API Call to STRING-DB
+            genes = gene_input.replace(" ", "").split(",")
+            url = "https://string-db.org/api/json/network"
+            params = {
+                "identifiers": "%0d".join(genes),
+                "species": 9606, # Human
+                "min_score": conf_score,
+                "caller_identity": "yashwant_nama_phd_app"
+            }
+            
+            try:
+                response = requests.post(url, data=params)
+                interactions = response.json()
+                
+                if interactions:
+                    # 2. Build NetworkX Graph
+                    G = nx.Graph()
+                    for edge in interactions:
+                        G.add_edge(edge['preferredName_A'], edge['preferredName_B'], weight=edge['score'])
+                    
+                    # 3. Visualization
+                    fig, ax = plt.subplots(figsize=(10, 8))
+                    pos = nx.spring_layout(G, k=0.5)
+                    
+                    # Draw nodes and edges
+                    nx.draw_networkx_nodes(G, pos, node_size=1200, node_color='#FF4B4B', edgecolors='white')
+                    nx.draw_networkx_edges(G, pos, width=2, alpha=0.5, edge_color='gray')
+                    nx.draw_networkx_labels(G, pos, font_size=10, font_family='sans-serif', font_weight='bold')
+                    
+                    plt.axis('off')
+                    st.pyplot(fig)
+                    
+                    st.success(f"Successfully mapped {len(G.nodes())} proteins and {len(G.edges())} interactions.")
+                else:
+                    st.error("No interactions found. Try lowering the confidence threshold.")
+            except Exception as e:
+                st.error(f"API Error: {e}")
+        else:
+            st.info("Click the button to visualize the protein-protein interaction network.")
+
 
 def run_zebrafish_morphometry():
     st.header("🧬 3D Spatial Phenotyping (Zebrafish)")
