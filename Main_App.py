@@ -60,17 +60,49 @@ def run_cd40_immunosome():
 
 def run_neurometabolic():
     st.header("🧠 NeuroMetabolic Pathway Engine")
-    diseases = ["Huntington's", "Alzheimer's", "Parkinson's", "ALS"]
-    choice = st.selectbox("Select Pathology", diseases)
+    st.markdown("---")
     
-    st.write(f"Analyzing KEGG Pathways for {choice}...")
-    # Sample Table
-    df_demo = pd.DataFrame({
-        "Gene": ["HTT", "BDNF", "CASP3", "SOD1"],
-        "Role": ["Core", "Neurotrophic", "Apoptosis", "Metabolic"],
-        "Score": [95, 88, 72, 65]
+    diseases = {
+        "Huntington's": "hsa05016", 
+        "Alzheimer's": "hsa05010", 
+        "Parkinson's": "hsa05012"
+    }
+    
+    choice = st.selectbox("Select Target Pathology:", list(diseases.keys()))
+    
+    col1, col2 = st.columns([1, 2])
+    
+    with col1:
+        st.subheader("Statistical Parameters")
+        n_sample = st.slider("Sample Size for Enrichment", 10, 50, 30)
+        st.info(f"Using KEGG Pathway: {diseases[choice]}")
+        
+    with col2:
+        st.subheader("Mechanism Enrichment")
+        # Mock data based on your Fisher Exact logic
+        mechanisms = ["Mitochondria", "Proteostasis", "Autophagy", "Apoptosis", "Synaptic"]
+        scores = np.random.uniform(0, 5, 5) # -log10(p) values
+        
+        enrich_df = pd.DataFrame({"Mechanism": mechanisms, "-log10(p)": scores})
+        enrich_df = enrich_df.sort_values("-log10(p)", ascending=False)
+        
+        st.bar_chart(enrich_df.set_index("Mechanism"))
+        
+    st.subheader("🎯 Priority Candidate Genes")
+    # Sample gene list for the selected disease
+    gene_data = {
+        "Huntington's": ["HTT", "BDNF", "CASP3", "CREB1"],
+        "Alzheimer's": ["APP", "MAPT", "APOE", "PSEN1"],
+        "Parkinson's": ["SNCA", "PRKN", "PINK1", "LRRK2"]
+    }
+    
+    priority_df = pd.DataFrame({
+        "Gene": gene_data[choice],
+        "Functional Role": ["Core Component", "Neurotrophic Support", "Apoptotic Driver", "Metabolic Regulator"],
+        "Priority Score": [98, 85, 76, 70]
     })
-    st.table(df_demo)
+    st.dataframe(priority_df, use_container_width=True)
+
 
 def run_clinical_interactome():
     st.header("🔬 Clinical & PPI Validation (STRING-DB)")
