@@ -82,6 +82,33 @@ def run_cd40_immunosome():
         st.write("- TRAF6 activation: Predicted")
     with col2:
         st.info("Hypothesis: Scaffold rigidity dictates NF-kB oscillation frequency.")
+        # --- DYNAMIC SIGNALING HEATMAP ---
+    st.subheader("🔥 Receptor Clustering Heatmap")
+    
+    # Delivery vehicle ke basis par clustering intensity set karna
+    intensity_map = {"Liposome": 0.8, "Exosome": 1.2, "PLGA Polymer": 0.5, "Gold NP": 1.5}
+    base_intensity = intensity_map.get(vehicle, 1.0)
+    
+    # Random clustering data generate karna (Research simulation)
+    data = np.random.rand(10, 10) * base_intensity
+    
+    fig = go.Figure(data=go.Heatmap(
+        z=data,
+        x=[f"Pos {i}" for i in range(10)],
+        y=[f"Pos {i}" for i in range(10)],
+        colorscale='Hot',
+        colorbar=dict(title="Signaling Intensity")
+    ))
+    
+    fig.update_layout(
+        title=f"CD40 Nanocluster Distribution on {vehicle} Surface",
+        xaxis_title="Membrane X-axis",
+        yaxis_title="Membrane Y-axis"
+    )
+    
+    st.plotly_chart(fig, use_container_width=True)
+    
+    st.write(f"**Analysis:** The {vehicle} scaffold provides a spatial constraint that promotes TRAF6 recruitment.")
 
 def run_neurometabolic():
     st.header("🧠 NeuroMetabolic Pathway Engine")
