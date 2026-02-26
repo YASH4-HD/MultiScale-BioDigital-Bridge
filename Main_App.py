@@ -85,7 +85,7 @@ def run_cd40_immunosome():
         # --- DYNAMIC SIGNALING HEATMAP ---
     st.subheader("🔥 Receptor Clustering Heatmap")
     
-    # Delivery vehicle ke basis par clustering intensity set karna
+    vehicle = st.selectbox("Delivery Vehicle", ["Liposome", "Exosome", "PLGA Polymer", "Gold NP"])
     intensity_map = {"Liposome": 0.8, "Exosome": 1.2, "PLGA Polymer": 0.5, "Gold NP": 1.5}
     base_intensity = intensity_map.get(vehicle, 1.0)
     
