@@ -47,15 +47,15 @@ def run_tracer_design():
     st.subheader("📈 Tracer Kinetic Profile")
     
     t = np.linspace(0, 48, 100)
-    # Simple Kinetic Model: Uptake = Dose * (1 - exp(-kt)) * (Bmax/Kd)
-    # Clearance = Dose * exp(-0.1t)
     
-    uptake = (injected_dose * (1 - np.exp(-0.15 * t)) * (receptor_density / 50))
-    clearance = injected_dose * np.exp(-0.1 * t)
+    # Yahan humne sliders ke 'dose' aur 'b_max' variable use kiye hain
+    uptake = (dose * (1 - np.exp(-0.15 * t)) * (b_max / 50))
+    clearance = dose * np.exp(-0.1 * t)
     
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=t, y=uptake, name='Tumor Uptake', line=dict(color='firebrick', width=4)))
     fig.add_trace(go.Scatter(x=t, y=clearance, name='Blood Clearance', line=dict(color='royalblue', width=2, dash='dash')))
+
     
     fig.update_layout(
         title="Predictive Bio-distribution Over 48h",
