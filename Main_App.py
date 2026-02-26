@@ -230,40 +230,39 @@ def run_zebrafish_morphometry():
         st.warning("Please upload a file or select 'Use Sample Data' to begin.")
 
 
-# --- 3. THE UNIFIED NAVIGATION SIDEBAR ---
-
+# --- SIDEBAR: RESEARCH NARRATIVE & NAVIGATION ---
 st.sidebar.title("🧬 MS-BDB Suite")
-st.sidebar.markdown(f"**Researcher:** Yashwant Nama\n\n**Date:** Feb 26, 2026")
+st.sidebar.markdown(f"**Researcher:** Yashwant Nama\n**Date:** Feb 26, 2026")
 st.sidebar.divider()
 
+# --- NEW: THE SCIENTIFIC STORY MODE ---
+st.sidebar.subheader("🔬 The Research Storyline")
+with st.sidebar.expander("📖 Read the Workflow", expanded=True):
+    st.caption("1. **Molecular:** Design the PET Tracer (Affinity & Kinetics).")
+    st.caption("2. **Cellular:** Model CD40-TRAF6 clustering dynamics.")
+    st.caption("3. **Systems:** Map metabolic pathway perturbations.")
+    st.caption("4. **Network:** Validate with Live STRING-DB interactome.")
+    st.caption("5. **Phenotype:** Analyze 3D Nuclear Morphometry (Zebrafish).")
+
+st.sidebar.divider()
+
+# --- NAVIGATION ---
 menu = st.sidebar.radio(
-    "Select Research Scale:",
+    "Select Scale of Analysis:",
     [
         "1. Molecular: ImmunoPET Design",
-        "2. Cellular: CD40 Immunosome",
-        "3. Systems: NeuroMetabolic Mapping",
-        "4. Network: Clinical Interactome",
+        "2. Cellular: CD40 Immunosome", 
+        "3. Systems: NeuroMetabolic Mapping", 
+        "4. Network: Clinical Interactome", 
         "5. Organism: 3D Morphometry"
     ]
 )
 
 st.sidebar.divider()
-st.sidebar.caption("PhD Application Portfolio | Jaipur, Rajasthan")
 
-# --- 4. EXECUTION LOGIC ---
+# --- QUICK LINKS FOR PROFESSORS ---
+st.sidebar.subheader("🔗 Quick Links")
+st.sidebar.markdown("[📄 BioRxiv Preprint](https://www.biorxiv.org/content/10.1101/2024.08.19.608581v1)")
+st.sidebar.markdown("[💻 GitHub Repo](https://github.com/Yashwant-Nama/MultiScale-BioDigital-Bridge)")
 
-if menu == "1. Molecular: ImmunoPET Design":
-    run_tracer_design()
-elif menu == "2. Cellular: CD40 Immunosome":
-    run_cd40_immunosome()
-elif menu == "3. Systems: NeuroMetabolic Mapping":
-    run_neurometabolic()
-elif menu == "4. Network: Clinical Interactome":
-    run_clinical_interactome()
-elif menu == "5. Organism: 3D Morphometry":
-    run_zebrafish_morphometry()
-
-
-
-st.sidebar.divider()
-st.sidebar.caption("Unified Research Portfolio | 2026")
+st.sidebar.caption("PhD Portfolio | Jaipur, Rajasthan")
