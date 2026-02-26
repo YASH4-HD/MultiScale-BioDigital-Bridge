@@ -43,7 +43,32 @@ def run_tracer_design():
     with col2:
         st.metric("Predicted Tumor Binding", f"{binding:.2f} fmol/mg")
         st.info(TRACER_LIBRARY[selected]["note"])
-        # (Yahan aapka Plotly chart logic aa sakta hai)
+            # --- DYNAMIC KINETIC GRAPH ---
+    st.subheader("📈 Tracer Kinetic Profile")
+    
+    t = np.linspace(0, 48, 100)
+    # Simple Kinetic Model: Uptake = Dose * (1 - exp(-kt)) * (Bmax/Kd)
+    # Clearance = Dose * exp(-0.1t)
+    
+    uptake = (injected_dose * (1 - np.exp(-0.15 * t)) * (receptor_density / 50))
+    clearance = injected_dose * np.exp(-0.1 * t)
+    
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=t, y=uptake, name='Tumor Uptake', line=dict(color='firebrick', width=4)))
+    fig.add_trace(go.Scatter(x=t, y=clearance, name='Blood Clearance', line=dict(color='royalblue', width=2, dash='dash')))
+    
+    fig.update_layout(
+        title="Predictive Bio-distribution Over 48h",
+        xaxis_title="Hours Post-Injection (h)",
+        yaxis_title="Activity (kBq/cc)",
+        template="plotly_white",
+        legend=dict(yanchor="top", y=0.99, xanchor="left", x=0.01)
+    )
+    
+    st.plotly_chart(fig, use_container_width=True)
+    
+    st.info("💡 **Methodology Tip:** This plot uses a simplified compartmental model to predict the 'Optimal Imaging Window'. For your paper, this demonstrates how you select the best time-point for PET scanning.")
+
 
 def run_cd40_immunosome():
     st.header("🛡️ CD40 Systems Biology Framework")
