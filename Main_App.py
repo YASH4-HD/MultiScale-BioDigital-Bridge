@@ -1,57 +1,58 @@
 import streamlit as st
 
-# --- PAGE CONFIG ---
-st.set_page_config(page_title="Bio-Digital Bridge v1.0", layout="wide", page_icon="🔬")
+# --- 1. Import Libraries (Jo requirements.txt mein hain) ---
+import pandas as pd
+import numpy as np
+import plotly.graph_objects as go
+import matplotlib.pyplot as plt
+# (Baki saari libraries jo aapne scripts mein use ki hain)
 
-# --- CUSTOM CSS FOR PROFESSIONAL LOOK ---
-st.markdown("""
-    <style>
-    .main { background-color: #f5f7f9; }
-    .stSidebar { background-color: #1e3c72; color: white; }
-    </style>
-    """, unsafe_allow_html=True)
+# --- 2. Define Module Functions ---
 
-# --- SIDEBAR NAVIGATION ---
+def run_tracer_design():
+    st.header("🎯 Tracer Rational Design")
+    # Yahan "ImmunoPET-Tracer-Optimizer" ka pura code copy-paste karein
+    # Bas dhyaan rakhein ki 'st.set_page_config' ko remove kar dein kyunki wo sirf main app mein hota hai.
+
+def run_cd40_immunosome():
+    st.header("🛡️ CD40 Signaling Module")
+    # Yahan "CD40 Systems Biology Framework" ka pura code copy-paste karein
+
+def run_neurometabolic():
+    st.header("🧠 Metabolic Pathway Engine")
+    # Yahan "NeuroMetabolic Framework" ka pura code copy-paste karein
+
+def run_clinical_interactome():
+    st.header("🔬 Clinical & PPI Validation")
+    # Yahan "NeuroMetabolic Validation v3.6" ka pura code copy-paste karein
+
+def run_zebrafish_morphometry():
+    st.header("🧬 3D Spatial Phenotyping")
+    # Yahan "Zebrafish Morphometry Pro" ka pura code copy-paste karein
+
+# --- 3. Main App Navigation Logic ---
+
 st.sidebar.title("🧬 BDB Suite")
 st.sidebar.markdown("Applicant: **Yashwant Nama**")
-st.sidebar.divider()
 
 menu = st.sidebar.radio(
     "Select Research Scale:",
-    [
-        "1. Molecular: ImmunoPET Design",
-        "2. Cellular: CD40 Immunosome",
-        "3. Systems: NeuroMetabolic Mapping",
-        "4. Network: Clinical Interactome",
-        "5. Organism: 3D Morphometry (Zebrafish)"
-    ]
+    ["Molecular: ImmunoPET Design", "Cellular: CD40 Immunosome", 
+     "Systems: NeuroMetabolic Mapping", "Network: Clinical Interactome", 
+     "Organism: 3D Morphometry (Zebrafish)"]
 )
 
-# --- LOGIC TO CALL YOUR EXISTING SCRIPTS ---
-if menu == "1. Molecular: ImmunoPET Design":
-    # Yahan aapka Tracer Optimizer wala code aayega
-    st.header("🎯 Tracer Rational Design")
-    # (Pasted Code 5 logic)
+if menu == "Molecular: ImmunoPET Design":
+    run_tracer_design()
+elif menu == "Cellular: CD40 Immunosome":
+    run_cd40_immunosome()
+elif menu == "Systems: NeuroMetabolic Mapping":
+    run_neurometabolic()
+elif menu == "Network: Clinical Interactome":
+    run_clinical_interactome()
+elif menu == "Organism: 3D Morphometry (Zebrafish)":
+    run_zebrafish_morphometry()
 
-elif menu == "2. Cellular: CD40 Immunosome":
-    # Yahan CD40 Framework wala code
-    st.header("🛡️ CD40 Signaling Module")
-    # (Pasted Code 1 logic)
-
-elif menu == "3. Systems: NeuroMetabolic Mapping":
-    # NeuroMetabolic Framework
-    st.header("🧠 Metabolic Pathway Engine")
-    # (Pasted Code 2 logic)
-
-elif menu == "4. Network: Clinical Interactome":
-    # Clinical Validation Code
-    st.header("🔬 Clinical & PPI Validation")
-    # (Pasted Code 3 logic)
-
-elif menu == "5. Organism: 3D Morphometry (Zebrafish)":
-    # Zebrafish Morphometry Code
-    st.header("🧬 3D Spatial Phenotyping")
-    # (Pasted Code 4 logic)
 
 st.sidebar.divider()
 st.sidebar.caption("Unified Research Portfolio | 2026")
