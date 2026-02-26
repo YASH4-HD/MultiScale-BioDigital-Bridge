@@ -266,3 +266,13 @@ st.sidebar.markdown("[📄 BioRxiv Preprint](https://orcid.org/0009-0003-3443-44
 st.sidebar.markdown("[💻 GitHub Repo](https://github.com/YASH4-HD/MultiScale-BioDigital-Bridge)")
 
 st.sidebar.caption("PhD Portfolio | Jaipur, Rajasthan")
+if menu == "1. Molecular: ImmunoPET Design":
+    run_tracer_design()
+elif menu == "2. Cellular: CD40 Immunosome":
+    run_cd40_immunosome()
+elif menu == "3. Systems: NeuroMetabolic Mapping":
+    run_neurometabolic()
+elif menu == "4. Network: Clinical Interactome":
+    run_clinical_interactome()
+elif menu == "5. Organism: 3D Morphometry":
+    run_zebrafish_morphometry()
