@@ -315,7 +315,7 @@ st.sidebar.divider()
 
 # --- QUICK LINKS FOR PROFESSORS ---
 st.sidebar.subheader("🔗 Quick Links")
-st.sidebar.markdown("[📄 BioRxiv Preprint](https://orcid.org/0009-0003-3443-4413)")
+st.sidebar.markdown("[📄 ORCID ID](https://orcid.org/0009-0003-3443-4413)")
 st.sidebar.markdown("[💻 GitHub Repo](https://github.com/YASH4-HD/MultiScale-BioDigital-Bridge)")
 
 st.sidebar.caption("PhD Portfolio | Jaipur, Rajasthan")
